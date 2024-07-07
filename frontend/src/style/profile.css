@@ -1,0 +1,79 @@
+.profile-container {
+    background-color: #f3f4f6;
+    padding: 10px;
+    height: 95vh;
+  }
+   
+   
+   
+   
+  .profile-section {
+    display: flex;
+    padding-top:10px;
+   
+  }
+   
+  .profile-info {
+    flex: 1;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+   
+  }
+   
+  .profile-info h2 {
+    color: #333;
+   
+   
+  }
+   
+  .profile-info hr {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+  }
+   
+  .input-group {
+    margin-bottom: 15px;
+  }
+   
+  .input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #666;
+  }
+   
+  .input-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+   
+  .save-btn {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+   
+  .save-btn:hover {
+    background-color: #45a049;
+  }
+  .profile-image {
+    display: flex;
+    align-items: center;
+   
+   
+  }
+   
+  .profile-image img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+   

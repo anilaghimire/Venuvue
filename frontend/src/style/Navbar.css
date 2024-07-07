@@ -1,0 +1,104 @@
+/* Navbar.css */
+
+/* Base Styles */
+.navbar {
+  background-color: #ffff;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+  color: #dc3545; /* Red color */
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-link {
+  color: #000; /* Black color */
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #dc3545; /* Red color on hover */
+}
+
+.dropdown-menu {
+  background-color: #F6ECDF;  
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-item {
+  color: #964B00; /* Brown color for dropdown items */
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #f8f9fa; /* Light gray background on hover */
+  color: #000; /* Black color on hover */
+}
+
+.btn-outline-primary {
+  color: #8e4802; /* Primary color for button text */
+  border-color: #8e4802; /* Primary color for button border */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-primary:hover {
+  background-color: #964B00; /* Background color on hover */
+  color: #fff; /* Text color on hover */
+}
+
+.btn-outline-success {
+  color: #28a745; /* Success color for button text */
+  border-color: #28a745; /* Success color for button border */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-outline-success:hover {
+  background-color: #28a745; /* Background color on hover */
+  color: #fff; /* Text color on hover */
+}
+
+/* Logo Image */
+.navbar-brand img {
+  height: 50px; /* Increase logo image size */
+  width: auto; /* Maintain aspect ratio */
+}
+
+/* Cart Icon */
+.navbar .cart-icon {
+  color: #dc3543; /* Red color for cart icon */
+  font-size: 1.25rem; /* Increase size of cart icon */
+}
+
+/* Navbar Optimization */
+.navbar-collapse {
+  justify-content: flex-end;
+}
+
+.nav-item {
+  margin-left: 1rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .navbar-brand {
+      font-size: 1.25rem;
+  }
+
+  .nav-link {
+      font-size: 0.875rem;
+  }
+
+  .navbar-brand img {
+      height: 40px; /* Adjust logo size for smaller screens */
+  }
+
+  .navbar {
+      padding: 0.5rem;
+  }
+}

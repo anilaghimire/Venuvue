@@ -1,0 +1,95 @@
+/* Container for the entire page */
+.page-container {
+  display: flex;
+  justify-content: flex-end; /* Align to the right */
+  align-items: center;
+  height: 100vh;
+  background-color: #F8F9FA;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.background-image {
+  position: absolute;
+  width: 60%; /* Cover half of the page */
+  height: 100%;
+  background: url('../images/background.jpg') center/cover no-repeat;
+  z-index: 1;
+  left: 5%;
+}
+
+/* Container for the login form */
+.login-container {
+  position: absolute;
+  top: 50%; /* Position in the middle vertically */
+  right: 20px; /* Adjust this value to control the horizontal position */
+  transform: translateY(-50%); /* Center the container vertically */
+  max-width: 400px;
+  width: 100%;
+  padding: 40px; /* Add more padding for better spacing */
+  border-radius: 8px;
+  background-color: #E9D8C3;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  margin-right: 2%; /* Adjust margin to center on the right half */
+}
+
+/* Style for the heading */
+h1 {
+  text-align: center;
+  color: #964B00;
+  margin-bottom: 10px;
+  font-size: 36px;
+}
+
+h2 {
+  text-align: center;
+  color: #964B00;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* Style for input fields */
+.custom-input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+}
+
+/* Style for the login button */
+.custom-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #A77252; /* Change to the desired button color */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s; /* Smooth transition and interaction feedback */
+}
+
+.custom-btn:hover {
+  background-color: #8a5c3e; /* Slightly darker shade for hover */
+  transform: translateY(-2px); /* Lift button on hover for better UX */
+}
+
+/* Forgot Password link css */
+.text-black {
+  color: #000000;
+}
+
+.text-black:hover {
+  text-decoration: underline;
+  color: #A77252; /* Match hover color with button color */
+}
+
+/* Remove margin from the form */
+.custom-form {
+  margin: 0;
+}
