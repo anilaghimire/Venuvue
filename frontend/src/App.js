@@ -16,12 +16,15 @@ import UserRoutes from './protected/UserRoutes';
 import FeaturePage from './pages/admin/Featurepage';
 import Cart from './pages/cart/cart';
 import Profile from './pages/Profile';
+import Booking from './pages/Booking';
+import MyBookings from './pages/MyBookings.jsx';
+import ListingPage from './pages/ListingPage';
+import FAQPage from './pages/FAQ.jsx';
 
 
 // for showing toast messages
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 
 
 function App() {
@@ -36,7 +39,12 @@ function App() {
         <Route path='/product/:id' element={<ProductDetail />} />
         <Route path="/cartpage" element={<Cart/>} />
         <Route path='/profile'element={<Profile/>} />
-       
+        <Route path="/booking" element={<Booking></Booking>} />
+        <Route path="/mybookings" element={<MyBookings></MyBookings>} />
+        <Route path="/listingpage" element={<ListingPage/>}/>
+        <Route path = '/faq' element={<FAQPage/>}/>
+        
+        
        
         
 
@@ -53,6 +61,9 @@ function App() {
        
         
         <Route path = '/admin/edit/:id' element={<AdminEditProduct/>}/>
+        
+
+
         </Route>
       </Routes>
     </Router>

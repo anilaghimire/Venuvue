@@ -24,12 +24,25 @@
   color: #964B00;
 }
 
+.small-heading {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 20px; /* Smaller font size for "Our Products" */
+  color: #A77252;
+}
+
 /* Card Styles */
 .card {
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s ease-in-out;
+}
+
+.product-card .product-img {
+  width: 100%;
+  height: 300px; /* Set a consistent height for product images */
+  object-fit: cover; /* Ensures the image covers the area */
 }
 
 /* Text Color Within Card */
@@ -41,7 +54,7 @@
 .card h5,
 .card h6,
 .card span {
-  color: #964B00;
+  color: #A77252;
 }
 
 .card:hover {
@@ -58,10 +71,19 @@
   color: #666;
 }
 
+
 /* Button Styles */
 .btn-primary {
+  background-color: #A77252; /* Brown color */
+  color: #fff;
   margin-top: 10px;
+  transition: background-color 0.3s;
 }
+
+.btn-primary:active {
+  background-color: #007bff; /* Blue color on click */
+}
+
 
 /* Bottom Div Styles */
 .bottom-div {
@@ -71,6 +93,7 @@
   height: 200px;
   width: 100%;
 }
+
 
 /* Services Section Styles */
 .services-section {

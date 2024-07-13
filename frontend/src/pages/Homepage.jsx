@@ -9,6 +9,8 @@ import serviceImage2 from '../images/seminar.jpeg';
 import serviceImage3 from '../images/birthday.jpeg';
 import aboutImage from '../images/about.jpg'; 
 import Footer from '../components/footer';
+import FAQPage from './FAQ';
+
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -33,27 +35,6 @@ const HomePage = () => {
 
       <div className="container">
         <h1 className="heading">Services we provide</h1>
-        <div className="row">
-          {products.map((product) => (
-            <div key={product._id} className="col-md-4 mb-4">
-              <div className="card">
-                <img
-                  src={product.productImageUrl}
-                  className="card-img-top"
-                  alt={product.productName}
-                />
-                <div className="card-body">
-                  <h5 className="card-title">{product.productName}</h5>
-                  <p className="card-text">Rs.{product.productPrice}</p>
-                  <Link to={`/product/${product._id}`} className="btn btn-primary">
-                    View Details
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
         <div className="services-section">
           <div className="row">
             <div className="col-md-4 mb-4">
@@ -89,6 +70,28 @@ const HomePage = () => {
           </div>
         </div>
 
+        <h1 className="small-heading">Venues</h1>
+        <div className="row">
+          {products.map((product) => (
+            <div key={product._id} className="col-md-4 mb-4">
+              <div className="card product-card">
+                <img
+                  src={product.productImageUrl}
+                  className="card-img-top product-img"
+                  alt={product.productName}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{product.productName}</h5>
+                  <p className="card-text">Rs.{product.productPrice}</p>
+                  <Link to={`/product/${product._id}`} className="btn btn-primary">
+                    View Details
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
         {/* About Section */}
         <div className="about-section">
           <div className="row">
@@ -104,10 +107,13 @@ const HomePage = () => {
                 enjoyable. Browse through our wide range of services and find the
                 perfect fit for your next event.
               </p>
+              
             </div>
           </div>
         </div>
-      </div>
+        </div>
+        <FAQPage />
+        <br></br>
       <Footer/>
     </div>
   );

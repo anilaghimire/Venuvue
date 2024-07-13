@@ -1,0 +1,31 @@
+.my-bookings-page {
+  padding-top: 20px;
+}
+
+.static-header {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+.hero-image {
+  width: 100%;
+  height: auto;
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.table-responsive {
+  margin-top: 20px;
+}
+
+.booking-image {
+  width: 100px;
+  height: auto;
+}

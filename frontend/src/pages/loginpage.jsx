@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { loginUserApi } from '../apis/api';
-import '../style/Login.css'; // Importing CSS file for styling
-import { useNavigate } from 'react-router-dom'; // Importing useNavigate hook from react-router-dom
+import { useNavigate, Link } from 'react-router-dom';
+import '../style/Login.css';
+import logo from '../images/logo.png';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigate = useNavigate(); // Initialize the useNavigate hook in the login
+  const navigate = useNavigate();
 
   const changeEmail = (e) => {
     setEmail(e.target.value);
@@ -32,7 +33,7 @@ const LoginPage = () => {
 
     loginUserApi(data)
       .then((res) => {
-        console.log(res); // Log the response
+        console.log(res);
         if (res.data.success === false) {
           toast.error(res.data.message);
         } else {
@@ -40,8 +41,7 @@ const LoginPage = () => {
           localStorage.setItem('token', res.data.token);
           const jsonDecode = JSON.stringify(res.data.userData);
           localStorage.setItem('user', jsonDecode);
-          // Navigate to dashboard after successful login
-          navigate("/"); // Use navigate function to navigate to the dashboard
+          navigate("/"); // Navigate to dashboard after successful login
         }
       })
       .catch((err) => {
@@ -54,8 +54,8 @@ const LoginPage = () => {
     <div className="page-container">
       <div className="background-image"></div>
       <div className="login-container">
-        <h1>VenVue</h1>
-        <h2>SIGN IN</h2>
+        <img src={logo} alt="Logo" style={{ width: '120px', height: '80px', marginBottom: '20px' }} />
+        <h2 style={{ fontSize: '20px' }}>SIGN IN</h2>
         <form onSubmit={handleSubmit} className="custom-form">
           <input
             onChange={changeEmail}
@@ -73,10 +73,10 @@ const LoginPage = () => {
             SIGN IN
           </button>
           <p className="text-black text-decoration-none">
-            <a href="#">Forgot Password?</a>
+            <Link to="/forgot-password">Forgot Password?</Link>
           </p>
           <p className="text-black text-decoration-none">
-            Don't have an account? <a href="#">SIGN UP</a>
+            Don't have an account? <Link to="/register">SIGN UP</Link>
           </p>
         </form>
       </div>

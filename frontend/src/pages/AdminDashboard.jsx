@@ -66,7 +66,7 @@ const Admindashboard = () => {
   };
 
   return (
-    <div>
+    <div style={{paddingTop:"100px"}}>
       <div className="d-flex justify-content-between m-3 align-items-center">
         <h1>Welcome to Admin Dashboard!</h1>
 
@@ -122,10 +122,10 @@ const Admindashboard = () => {
                     onChange={(e) => setProductCategory(e.target.value)}
                     className="form-control"
                   >
-                    <option value="Jacket">Jacket</option>
-                    <option value="T-shirt">T-shirt</option>
-                    <option value="Pant">Pant</option>
-                    <option value="Accessories">Accessories</option>
+                    <option value="Wedding and reception">Wedding and reception</option>
+                    <option value="Seminars and conference">Seminars and conference</option>
+                    <option value="birthdays abd celebration">birthdays abd celebration</option>
+                    
                   </select>
 
                   <label>Product Description</label>
@@ -133,7 +133,7 @@ const Admindashboard = () => {
                     onChange={(e) => setProductDescription(e.target.value)}
                     className="form-control"
                     rows="3"
-                    placeholder="Enter product description"
+                    placeholder="Enter location and  description"
                   ></textarea>
 
                   <label>Product Image</label>

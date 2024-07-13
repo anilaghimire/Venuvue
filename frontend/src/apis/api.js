@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const Api = axios.create({
-    baseURL: 'http://localhost:5000', // Corrected baseURL to match your backend server port
+    baseURL: 'http://localhost:5000', 
     withCredentials: true,
     headers: {
         'Content-Type': 'multipart/form-data',
@@ -14,7 +14,7 @@ const config = () => ({
     }
 });
 
-// Example API requests
+
 
 // Test API request
 export const testApi = () => Api.get('/test');
@@ -43,6 +43,8 @@ export const deleteProductApi = (id) => Api.delete(`/api/product/delete_product/
 // Delete cart product API with id
 export const deleteCartProductApi = (id) => Api.delete(`/api/cart/delete/${id}`, config());
 
+
+
 // Get logged-in user details API
 export const getLoggedInUserDetail = () => {
     const token = localStorage.getItem('token');
@@ -65,3 +67,11 @@ export const updateLoggedInUserDetail = (id, userData) => {
         },
     });
 };
+
+
+// Booking APIs
+export const createBookingAPI = (data) => Api.post("/api/booking", data, config());
+export const getBookingsAPI = () => Api.get("/api/booking", config());
+export const getBookingAPI = (id) => Api.get(`/api/booking/${id}`, config());
+export const updateBookingAPI = (id, data) => Api.put(`/api/booking/${id}`, data, config());
+export const deleteBookingAPI = (id) => Api.delete(`/api/booking/${id}`, config());

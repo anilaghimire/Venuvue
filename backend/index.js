@@ -1,5 +1,3 @@
-// index.js (or server setup file)
-
 // Importing necessary modules
 const express = require('express');
 const dotenv = require('dotenv');
@@ -8,15 +6,22 @@ const connectDB = require('./database/db'); // Ensure db.js file correctly sets 
 const cors = require('cors');
 const multiparty = require('connect-multiparty');
 const cloudinary = require('cloudinary');
-const userRoutes = require('./route/userRoutes'); // Example route imports
-const productRoutes = require('./route/productRoutes'); // Example route imports
-const cartRoutes = require('./route/cartRoutes'); // Example route imports
+const userRoutes = require('./route/userRoutes'); 
+const productRoutes = require('./route/productRoutes'); 
+const cartRoutes = require('./route/cartRoutes'); 
+const bookingRoutes = require('./route/bookingRoutes')
 
 // Initialize Express app
 const app = express();
 
 // Load environment variables from .env file
 dotenv.config();
+
+// Verify environment variables
+console.log('DB_URL:', process.env.DB_URL);
+console.log('CLOUD_NAME:', process.env.CLOUD_NAME);
+console.log('API_KEY:', process.env.API_KEY);
+console.log('API_SECRET:', process.env.API_SECRET);
 
 // CORS policy setup
 const corsPolicy = {
@@ -37,7 +42,7 @@ cloudinary.config({
 });
 
 // Connect to MongoDB
-connectDB(); // Ensure this function correctly connects to your MongoDB instance
+connectDB(); //  correctly connects to your MongoDB instance
 
 // JSON middleware for handling JSON data
 app.use(express.json());
@@ -60,6 +65,9 @@ app.use('/api/product', productRoutes);
 
 // Cart routes
 app.use('/api/cart', cartRoutes);
+
+// Booking routes
+app.use('/api/booking', bookingRoutes); 
 
 // Define port for server to listen on
 const PORT = process.env.PORT || 5000;
