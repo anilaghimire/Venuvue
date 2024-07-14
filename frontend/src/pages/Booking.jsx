@@ -1,24 +1,37 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Footer from '../components/footer';
 import '../style/Booking.css';
 import { createBookingAPI } from '../apis/api';
-
 
 const Booking = () => {
   const [eventType, setEventType] = useState('');
   const [peopleNumber, setPeopleNumber] = useState('');
   const [date, setDate] = useState('');
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = { eventType, peopleNumber, date };
+      // Retrieve user ID from local storage
+      const userDataFromStorage = localStorage.getItem("user");
+      if (!userDataFromStorage) {
+        console.error('User data not found in local storage');
+        return;
+      }
+      const { _id: userId } = JSON.parse(userDataFromStorage);
+
+      // Prepare booking data
+      const data = { userId, eventType, peopleNumber, date };
+
+      // Call API to create booking
       await createBookingAPI(data);
-      navigate("/mybookings");
+      
+      // Redirect or display success message
+      alert('Booking created successfully!');
+      // Optionally, redirect to mybookings page
+      // window.location.href = '/mybookings';
     } catch (error) {
       console.error('Error creating booking', error);
+      alert('Failed to create booking. Please try again.');
     }
   };
 

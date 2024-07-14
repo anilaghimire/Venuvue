@@ -4,8 +4,6 @@ exports.createBooking = async (req, res) => {
     try {
         const { userId,eventType, peopleNumber, date } = req.body;
         
-        // Get userId from authenticated user
-        
         // Validate input fields
         if (!eventType || !peopleNumber || !date) {
             return res.status(400).json({ message: 'Please provide all required fields: eventType, peopleNumber, date' });

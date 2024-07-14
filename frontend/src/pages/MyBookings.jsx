@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 import '../style/MyBookings.css';  
 import Navbar from '../components/Navbar'; 
 import image from '../images/saved.png'; 
@@ -7,14 +8,22 @@ import { getBookingAPI } from '../apis/api';
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true); // State to manage loading state
+  const navigate = useNavigate(); // Use navigate to redirect if user is not found
 
   useEffect(() => {
     const fetchBookings = async () => {
       try {
-        // Call getBookingAPI with userId (replace 'userIdValue' with actual userId)
-        const response = await getBookingAPI('userIdValue'); 
-        console.log('API Response:', response.data);  
-        setBookings(response.data);
+        const userDataFromStorage = localStorage.getItem("user");
+        if (userDataFromStorage) {
+          const { _id: userId } = JSON.parse(userDataFromStorage);
+
+          // Call getBookingAPI with userId
+          const response = await getBookingAPI(userId);
+          console.log('API Response:', response.data);  
+          setBookings(response.data);
+        } else {
+          navigate("/login"); // Redirect to login if user data is not found in local storage
+        }
       } catch (error) {
         console.error('Error fetching bookings', error);
       } finally {
@@ -23,7 +32,7 @@ const MyBookings = () => {
     };
 
     fetchBookings();
-  }, []);
+  }, [navigate]); // Include navigate in dependency array
 
   return (
     <div className="container-fluid my-bookings-page">
@@ -51,7 +60,7 @@ const MyBookings = () => {
                   <th>Event Type</th>
                   <th>Number of People</th>
                   <th>Event Date</th>
-                  <th>Time</th>
+                 
                 </tr>
               </thead>
               <tbody>
@@ -67,9 +76,9 @@ const MyBookings = () => {
                         {booking.banquet}
                       </td>
                       <td>{booking.eventType}</td>
-                      <td>{booking.numberOfPeople}</td>
-                      <td>{booking.eventDate}</td>
-                      <td>{booking.time}</td>
+                      <td>{booking.peopleNumber}</td>
+                      <td>{booking.date}</td>
+                      
                     </tr>
                   ))
                 ) : (
