@@ -1,125 +1,122 @@
-import React, { useEffect, useRef, useState } from "react";
-import {  getLoggedInUserDetail, updateLoggedInUserDetail } from "../apis/api";
-import { toast } from "react-toastify";
-import '../style/editprofile.css';
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import '../style/profile.css';
+import dummyPhoto from '../images/image.png';
+import { updateUser } from '../apis/api';
+import { toast } from 'react-toastify';
+ 
 const Profile = () => {
-  const { id } = useParams(); // Access id parameter from URL
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+  const [
+    formData, setFormData] = useState({
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    avatar: user.avatar,
+  });
  
-  const fileInputRef = useRef(null);
- 
-  const handleImageClick = () => {
-     fileInputRef.current.click();
-  };
- 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    console.log(file)
-    setUser((user) => ({ ...user, avatar: file }));
-  };
- 
-  const initialUserState = {
-    firstName: "",//firstname
-  lastName: "", //lastname
-    email: "", //email
-  };
- 
-  const [user, setUser] = useState(initialUserState);
- 
-  useEffect(() => {
-    getLoggedInUserDetail(id)
-      .then((res) => {
-        if (res.data.success === false) {
-          toast.error(res.data.message);
-          return;
-        } else if (res.data.success === true) {
-          setUser(res.data.user);
-        } else {
-          toast.error("Internal server error");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Internal server error");
-      });
-  }, [id]);
- 
-  const handleUserUpdate = async () => {
+  const handleSubmit = async () => {
     try {
-      const fd = new FormData();
-      fd.append("firstName", user.firstName);
-      fd.append("lastName", user.lastName);
-      fd.append("email", user.email);
-      fd.append("avatar", user.avatar)
- 
-      const res = await updateLoggedInUserDetail(id, fd);
-      toast.success(res.data.message);
+      const response = await updateUser(user._id, formData);
+      console.log('Profile updated successfully:', response.data);
+      toast.success('Profile updated successfully');
+      localStorage.setItem('user', JSON.stringify(response.data.user));
+      setUser(response.data.user);
     } catch (error) {
-      const response = await error.response.data;
-      console.log(response)
-      toast.error(response.message)
-      console.log("error: ", error);
+      console.error('Error updating profile:', error.message);
+      toast.error('Error updating profile');
     }
   };
-  const placeholderAvatar =
-    "https://media.istockphoto.com/id/1337144146/vector/default-avatar-profile-icon-vector.jpg?s=612x612&w=0&k=20&c=BIbFwuv7FxTWvh5S3vB6bkT0Qv8Vn8N5Ffseq84ClGI=";
+ 
+  const handleInputChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+ 
+  const handlePhotoChange = async (e) => {
+    try {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setFormData({
+          ...formData,
+          avatar: reader.result,
+        });
+      };
+    } catch (error) {
+      console.error('Error updating user profile:', error.message);
+      toast.error('Error updating profile');
+    }
+  };
+ 
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('user')));
+  }, []);
  
   return (
-    <div className="profile-container">
-          <div className="profile-image" onClick={handleImageClick}>
-          <img
-            src={user.avatar || placeholderAvatar}
-            alt="User Profile"
-            onError={(e) => console.error("Image loading error", e)}
-          />
+    <div className="container">
+      <h1>Profile</h1>
+      <form>
+        <div className="form-group">
+          <label htmlFor="avatarInput">Profile Picture:</label>
           <input
+            id="avatarInput"
             type="file"
+            onChange={handlePhotoChange}
             accept="image/*"
-            ref={fileInputRef}
-            style={{ display: "none" }}
-            onChange={(e) => handleFileChange(e)}
+            style={{ display: 'none' }}
           />
+          <label htmlFor="avatarInput" className="profile-photo">
+            <img
+              src={formData.avatar || user.avatar || dummyPhoto}
+              alt="Profile"
+              className="profile-photo-image"
+            />
+          </label>
         </div>
-      <div className="profile-section">
- 
-        <div className="profile-info">
-          <h2>Your New Profile</h2>
-          <hr />
-          <div className="input-group">
-            <label>First Name</label>
-            <input
-              onChange={(event) => setUser((user) => ({ ...user, firstName: event.target.value }))}
-              value={user.firstName}
-              placeholder="Your New First Name"
-              type="text"
-            />
-          </div>
-          <div className="input-group">
-            <label>Last Name</label>
-            <input
-              onChange={(event) => setUser((user) => ({ ...user, lastName: event.target.value }))}
-              value={user.lastName}
-              placeholder="Your New Last Name"
-              type="text"
-            />
-          </div>
-          <div className="input-group">
-            <label>Email</label>
-            <input
-              onChange={(event) => setUser((user) => ({ ...user, email: event.target.value }))}
-              value={user.email}
-              placeholder="Your New Email"
-              type="text"
-            />
-          </div>
-          <button onClick={handleUserUpdate} className="save-btn">
-            Save Changes
-          </button>
-        </div>
-     
+        <div className="form-row">
+      <div className="form-group">
+        <label htmlFor="firstName">First Name:</label>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleInputChange}
+        />
       </div>
+      <div className="form-group">
+        <label htmlFor="lastName">Last Name:</label>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleInputChange}
+        />
+      </div>
+    </div>
+    <div className="form-row">
+      <div className="form-group">
+        <label htmlFor="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          disabled
+        />
+      </div>
+    </div>
+        <button type="button" onClick={handleSubmit}>Save Changes</button>
+      </form>
     </div>
   );
 };
  
 export default Profile;
+ 
+ 

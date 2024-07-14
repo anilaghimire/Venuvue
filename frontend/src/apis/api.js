@@ -14,6 +14,8 @@ const config = () => ({
   },
 });
 
+console.log(config)
+
 // Test API request
 export const testApi = () => Api.get("/test");
 
@@ -22,6 +24,12 @@ export const createUserApi = (data) => Api.post("/api/user/create", data);
 
 // Login user API
 export const loginUserApi = (data) => Api.post("/api/user/login", data);
+
+export const updateUser = (userId, userData) => Api.put(`/api/user/update/${userId}`,userData,config)
+
+export const forgotPasswordApi = (data) => Api.post("/api/user/forgot/password", data,config);
+export const resetPasswordApi = (data, token) => Api.put(`/api/user/password/reset/${token}`, data,config);
+ 
 
 // Create product API
 export const createProductApi = (data) =>

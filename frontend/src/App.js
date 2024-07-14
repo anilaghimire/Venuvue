@@ -25,6 +25,7 @@ import FAQPage from './pages/FAQ.jsx';
 // for showing toast messages
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ForgetPassword from './pages/forgetPassword.jsx';
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/mybookings" element={<MyBookings/>} />
         <Route path="/listingpage" element={<ListingPage/>}/>
         <Route path = '/faq' element={<FAQPage/>}/>
+        <Route path = '/forgot-password' element={<ForgetPassword/>}/>
         
         
        
