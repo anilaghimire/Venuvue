@@ -1,112 +1,94 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../style/Navbar.css';
-import { FaBookmark } from "react-icons/fa"; // Correct import from react-icons/fa
-import logo from '../images/logo.png';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"; // Import useParams from react-router-dom
+import '../style/MyBookings.css';  
+import Navbar from '../components/Navbar'; 
+import image from '../images/saved.png'; 
+import { getBookingAPI } from '../apis/api';
 
-const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
+const MyBookings = () => {
+  const { userId } = useParams(); // Get userId from URL params
+  const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true); // State to manage loading state
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
+    // Get userId from localStorage and parse it
+    const storedUserId = JSON.parse(localStorage.getItem("user")).userId;
+
+    const fetchBookings = async () => {
+      try {
+        // Call getBookingAPI with userId
+        const response = await getBookingAPI(storedUserId); // Pass storedUserId to API call
+        console.log('API Response:', response.data);  
+        setBookings(response.data);
+      } catch (error) {
+        console.error('Error fetching bookings', error);
+      } finally {
+        setLoading(false); // Set loading state to false once data is fetched or error occurs
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  // Get user data from local storage
-  const user = JSON.parse(localStorage.getItem('user'));
-
-  // Logout function
-  const navigate = useNavigate();
-  const handleLogout = (e) => {
-    e.preventDefault();
-    localStorage.clear();
-    navigate('/login');
-  };
+    fetchBookings();
+  }, []); // Dependency array is empty because userId is retrieved internally
 
   return (
-    <>
-      <nav className={`navbar navbar-expand-md ${scrolled ? 'scrolled' : ''}`}>
-        <div className="container-fluid">
-          {/* Logo and Home Link */}
-          <div className="d-flex align-items-center">
-            <Link className="navbar-brand me-2" to="/">
-              <img src={logo} alt="Logo" height="50" />
-            </Link>
-            <Link className="nav-link active" aria-current="page" to="/">Home</Link>
-          </div>
-
-          {/* My Bookings Link */}
-          <Link to="/mybooking" className="nav-link">
-            My Bookings
-          </Link>
-
-          {/* Rest of the Navbar */}
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Category
-                </a>
-                <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#">Wedding and Receptions</a></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" href="#">Seminars and Conference</a></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" href="#">Birthdays and celebrations</a></li>
-                </ul>
-              </li>
-            </ul>
-
-            <form className="d-flex" role="search">
-              <Link to="/cartpage" className="m-4">
-                <FaBookmark size={24} color="#C1536B" /> 
-              </Link>
-              {user ? (
-                <div className="dropdown">
-                  <button className="btn btn-outline-primary me-2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    Welcome, {user.name}!
-                  </button>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    {user.isAdmin && (
-                      <li>
-                        <Link className="dropdown-item" to="/admindashboard">
-                          Edit Products
-                        </Link>
-                      </li>
-                    )}
-                    <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
-                    <li><Link className="dropdown-item" to="/changingpp">Change Password</Link></li>
-                    <li><hr className="dropdown-divider" /></li>
-                    <li><button onClick={handleLogout} className="dropdown-item" to="/logout">Logout</button></li>
-                  </ul>
-                </div>
-              ) : (
-                <div className='d-flex align-items-center'>
-                  <Link className="btn btn-outline-primary me-2 " to={'/login'}>Login</Link>
-                  <Link className="btn btn-outline-success " to={'/register'}>Register</Link>
-                </div>
-              )}
-            </form>
+    <div className="container-fluid my-bookings-page">
+      <div className="static-header">
+        <div className="navbar">
+          <Navbar />
+        </div>
+        <div className="container-fluid" style={{ backgroundColor: "#ffffff", paddingTop: "50px", paddingBottom: "50px" }}>
+          {/* Static Image Section */}
+          <div className="w-100 mb-4" style={{ height: "50vh", overflow: "hidden" }}>
+            <img src={image} alt="Static" className="img-fluid w-100" style={{ objectFit: "cover", height: "100%" }} />
           </div>
         </div>
-      </nav>
-    </>
+      </div>
+
+      <div className="container">
+        <div className="table-responsive">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <table className="table table-bordered">
+              <thead className="thead-light">
+                <tr>
+                  <th>Banquet</th>
+                  <th>Event Type</th>
+                  <th>Number of People</th>
+                  <th>Event Date</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.length > 0 ? (
+                  bookings.map((booking, index) => (
+                    <tr key={index}>
+                      <td>
+                        <img
+                          src={booking.image}
+                          alt={booking.banquet}
+                          className="img-fluid booking-image"
+                        />
+                        {booking.banquet}
+                      </td>
+                      <td>{booking.eventType}</td>
+                      <td>{booking.numberOfPeople}</td>
+                      <td>{booking.eventDate}</td>
+                      <td>{booking.time}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="5">No bookings available</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Navbar;
+export default MyBookings;

@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const bookingController = require('../controllers/bookingController');
- 
-router.post('/', bookingController.createBooking);
+const { authGuard } = require("../middleware/authGuard");
+
+router.post('/',authGuard, bookingController.createBooking);
 router.get('/', bookingController.getBookings);
-router.get('/:id', bookingController.getBooking);
+router.get('/user/:userId/bookings', bookingController.getBooking);
 router.put('/:id', bookingController.updateBooking);
 router.delete('/:id', bookingController.deleteBooking);
  

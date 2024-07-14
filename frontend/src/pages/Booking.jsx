@@ -4,6 +4,7 @@ import Footer from '../components/footer';
 import '../style/Booking.css';
 import { createBookingAPI } from '../apis/api';
 
+
 const Booking = () => {
   const [eventType, setEventType] = useState('');
   const [peopleNumber, setPeopleNumber] = useState('');
@@ -15,7 +16,7 @@ const Booking = () => {
     try {
       const data = { eventType, peopleNumber, date };
       await createBookingAPI(data);
-      navigate("/mybooking");
+      navigate("/mybookings");
     } catch (error) {
       console.error('Error creating booking', error);
     }

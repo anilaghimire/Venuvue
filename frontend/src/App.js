@@ -40,7 +40,7 @@ function App() {
         <Route path="/cartpage" element={<Cart/>} />
         <Route path='/profile'element={<Profile/>} />
         <Route path="/booking" element={<Booking></Booking>} />
-        <Route path="/mybookings" element={<MyBookings></MyBookings>} />
+        <Route path="/mybookings" element={<MyBookings/>} />
         <Route path="/listingpage" element={<ListingPage/>}/>
         <Route path = '/faq' element={<FAQPage/>}/>
         

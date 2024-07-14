@@ -24,7 +24,6 @@ const Admindashboard = () => {
     setProductImage(files);
     setPreviewImage(URL.createObjectURL(files));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -86,7 +85,8 @@ const Admindashboard = () => {
           aria-labelledby="exampleModalLabel"
           aria-hidden="true"
         >
-          <div className="modal-dialog">
+
+<div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
                 <h1 className="modal-title fs-5" id="exampleModalLabel">
@@ -109,7 +109,7 @@ const Admindashboard = () => {
                     placeholder="Enter product name"
                   />
 
-                  <label>Product Price</label>
+<label>Product Price</label>
                   <input
                     onChange={(e) => setProductPrice(e.target.value)}
                     type="number"

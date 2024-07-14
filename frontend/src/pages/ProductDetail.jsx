@@ -51,10 +51,10 @@ const ProductDetailPage = () => {
           "Authorization": `Bearer ${localStorage.getItem('token')}`
         }
       });
-      toast.success('Item added to cart');
+      toast.success('Item added to favourite');
      // navigate('/cart');
     } catch (error) {
-      toast.error('Failed adding to cart');
+      toast.error('Failed adding to favourite');
     }
   };
 
@@ -105,7 +105,7 @@ const ProductDetailPage = () => {
 
           <div className="map-container">
             <iframe
-              src="https://www.google.com/maps/search/dillibazar/@27.7071529,85.3224904,16z/data=!3m1!4b1?entry=ttu"
+              src="https://www.google.com/maps?q=Times+Square,+New+York,+NY,+USA&hl=es;z=14&output=embed"
               width="600"
               height="450"
               allowFullScreen=""
