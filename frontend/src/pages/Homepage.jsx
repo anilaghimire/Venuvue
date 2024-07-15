@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllProductsApi } from '../apis/api';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../style/Homepage.css';
 
 import homepageImage from '../images/home_bg.jpg';
@@ -13,6 +13,8 @@ import FAQPage from './FAQ';
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAllProductsApi()
@@ -23,6 +25,18 @@ const HomePage = () => {
         console.error('Error fetching products: ', error);
       });
   }, []);
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const filteredProducts = products.filter((product) =>
+    product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const navigateToListingPage = () => {
+    navigate('/listingPage');
+  };
 
   return (
     <div>
@@ -38,7 +52,7 @@ const HomePage = () => {
           <div className="row">
             <div className="col-md-4 mb-4">
               <Link to="/service1" className="service-link">
-                <div className="card">
+                <div className="card service-card">
                   <img src={serviceImage1} className="card-img-top" alt="Service 1" />
                   <div className="card-body">
                     <h5 className="card-title">Wedding and Receptions</h5>
@@ -48,7 +62,7 @@ const HomePage = () => {
             </div>
             <div className="col-md-4 mb-4">
               <Link to="/service2" className="service-link">
-                <div className="card">
+                <div className="card service-card">
                   <img src={serviceImage2} className="card-img-top" alt="Service 2" />
                   <div className="card-body">
                     <h5 className="card-title">Seminars and Conferences</h5>
@@ -58,7 +72,7 @@ const HomePage = () => {
             </div>
             <div className="col-md-4 mb-4">
               <Link to="/service3" className="service-link">
-                <div className="card">
+                <div className="card service-card">
                   <img src={serviceImage3} className="card-img-top" alt="Service 3" />
                   <div className="card-body">
                     <h5 className="card-title">Birthdays and Celebrations</h5>
@@ -69,9 +83,24 @@ const HomePage = () => {
           </div>
         </div>
 
-        <h1 className="small-heading">Venues</h1>
+        <div className="venue-search-container">
+          <h1 className="small-heading">Venues</h1>
+          <div className="searchbar">
+            <input
+              className="search_input"
+              type="text"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              placeholder="Search products..."
+            />
+            <a href="#" className="search_icon">
+              <i className="fas fa-search"></i>
+            </a>
+          </div>
+        </div>
+
         <div className="row">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <div key={product._id} className="col-md-4 mb-4">
               <div className="card product-card">
                 <img
@@ -89,6 +118,12 @@ const HomePage = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        <div className="view-more-container">
+          <button className="btn btn-secondary" onClick={navigateToListingPage}>
+            View More
+          </button>
         </div>
 
         {/* About Section */}

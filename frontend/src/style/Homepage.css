@@ -27,8 +27,45 @@
 .small-heading {
   text-align: center;
   margin-top: 20px;
-  font-size: 20px; /* Smaller font size for "Our Products" */
+  font-size: 20px;
   color: #A77252;
+}
+
+/* Venue Search Container Styles */
+.venue-search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-left: 20px;
+}
+
+.search_input {
+  border: none;
+  padding: 10px;
+  outline: none;
+  width: 200px;
+}
+
+.search_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  background-color: #A77252;
+  color: #fff;
+}
+
+.search_icon i {
+  font-size: 16px;
 }
 
 /* Card Styles */
@@ -71,7 +108,6 @@
   color: #666;
 }
 
-
 /* Button Styles */
 .btn-primary {
   background-color: #A77252; /* Brown color */
@@ -84,6 +120,25 @@
   background-color: #007bff; /* Blue color on click */
 }
 
+.btn-secondary {
+  background-color: #A77252; /* Brown color */
+  color: #fff;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.btn-secondary:active {
+  background-color: #007bff; /* Blue color on click */
+}
+
+.view-more-banquet-button {
+  padding: 10px 20px;
+  text-align: center;
+  width: auto; /* Allow the button width to adjust */
+}
 
 /* Bottom Div Styles */
 .bottom-div {
@@ -93,7 +148,6 @@
   height: 200px;
   width: 100%;
 }
-
 
 /* Services Section Styles */
 .services-section {
@@ -119,6 +173,7 @@
   object-fit: cover; /* Ensuring the image covers the defined dimensions */
 }
 
+
 .service-link .card-title {
   text-align: center;
   font-size: 22px;
@@ -130,6 +185,7 @@
   font-size: 16px;
   margin-top: 5px;
 }
+
 
 /* About Section Styles */
 .about-section {
@@ -181,3 +237,4 @@
 .container {
   padding: 0 15px;
 }
+

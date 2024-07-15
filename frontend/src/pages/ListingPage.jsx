@@ -1,8 +1,8 @@
 import React from "react";
 import image1 from "../images/TAJ.jpg";
-import image2 from "../images/homepage.png";
-import image3 from "../images/about.jpg";
-import image4 from "../images/wedding.jpeg";
+import image2 from "../images/img1.jpeg";
+import image3 from "../images/img2.jpeg";
+import image4 from "../images/img3.jpeg";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer"; // Ensure the path and casing are correct
