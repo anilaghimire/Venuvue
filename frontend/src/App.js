@@ -33,6 +33,7 @@ import FAQPage from './pages/FAQ.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ForgetPassword from './pages/forgetPassword.jsx';
+import ResetPassword from './pages/ResestPassword.jsx';
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
         <Route path="/listingpage" element={<ListingPage/>}/>
         <Route path = '/faq' element={<FAQPage/>}/>
         <Route path = '/forgot-password' element={<ForgetPassword/>}/>
+        <Route path="/password/reset/:token" element={<ResetPassword />} />
         
         
        

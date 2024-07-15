@@ -4,6 +4,7 @@ const userController = require('../controllers/userController');
 
 
 
+
 router.post('/create', userController.createUser) 
 
 
@@ -14,7 +15,7 @@ router.get("/verify/:id", userController.verifyMail);
 
 router.put("/update/:id", userController.updateUserProfile);
 
-router.post("/forgot/password", userController.forgotPassword);
+router.post("/forgot", userController.forgotPassword);
 router.put("/password/reset/:token", userController.resetPassword);
 
 // export

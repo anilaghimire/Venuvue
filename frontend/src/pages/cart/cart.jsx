@@ -95,7 +95,7 @@ const Cart = () => {
         <img src={image} alt="Static" className="img-fluid w-100" style={{ objectFit: "cover", height: "100%" }} />
       </div>
 
-      <div className="container">
+      <div className="container-fluid" style={{ maxWidth: "1200px" }}> {/* Increase width and add max-width */}
         <div className="row">
           <div className="col-md-8">
             {cartItems.length === 0 ? (
