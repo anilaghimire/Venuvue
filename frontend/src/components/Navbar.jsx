@@ -89,7 +89,7 @@ const Navbar = () => {
                     </li>
                   )}
                   <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
-                  <li><Link className="dropdown-item" to="/changingpp">Change Password</Link></li>
+                  <li><Link className="dropdown-item" to="/forgot-password">Change Password</Link></li>
                   <li><hr className="dropdown-divider" /></li>
                   <li><button onClick={handleLogout} className="dropdown-item" to="/logout">Logout</button></li>
                 </ul>

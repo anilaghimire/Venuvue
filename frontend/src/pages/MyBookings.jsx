@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import '../style/MyBookings.css';
 import Navbar from '../components/Navbar';
 import staticImage from '../images/myboooking.png'; // Your static image
-import { getBookingAPI } from '../apis/api';
+import { getBookingAPI, deleteBookingAPI } from '../apis/api'; // Import deleteBookingAPI
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -32,6 +32,17 @@ const MyBookings = () => {
     fetchBookings();
   }, [navigate]);
 
+  const handleDeleteBooking = async (id) => {
+    try {
+      await deleteBookingAPI(id);
+      // Filter out the deleted booking from the state
+      setBookings(bookings.filter(booking => booking._id !== id));
+      console.log('Booking deleted successfully');
+    } catch (error) {
+      console.error('Error deleting booking:', error);
+    }
+  };
+
   return (
     <div className="my-bookings-page">
       <Navbar />
@@ -56,6 +67,7 @@ const MyBookings = () => {
                   <th>Event Type</th>
                   <th>Number of People</th>
                   <th>Event Date</th>
+                  <th>Action</th> {/* Added Action column for delete button */}
                 </tr>
               </thead>
               <tbody>
@@ -68,16 +80,24 @@ const MyBookings = () => {
                           alt="Banquet"
                           className="img-fluid booking-image"
                         />
-                        Static Banquet Name {/* Static name */}
+                        {booking.banquetName} {/* Dynamic banquet name */}
                       </td>
                       <td>{booking.eventType}</td>
                       <td>{booking.peopleNumber}</td>
                       <td>{booking.date}</td>
+                      <td>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteBooking(booking._id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="4">No bookings available</td>
+                    <td colSpan="5">No bookings available</td>
                   </tr>
                 )}
               </tbody>

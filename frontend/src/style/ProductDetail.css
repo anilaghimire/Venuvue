@@ -67,28 +67,28 @@
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 10px; /* Adjust the gap if needed */
   margin-top: 20px;
 }
 
 .save-banquet-button,
 .proceed-booking-button {
-  display: block;
   padding: 10px 20px;
-  font-size: 18px;
+  font-size: 14px;
   color: #fff;
   background-color: #964B00;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  max-width: 150px; /* Set a maximum width */
+  width: 100%; /* Ensures buttons take full available width */
 }
 
 .save-banquet-button:hover,
 .proceed-booking-button:hover {
   background-color: #a26d57;
 }
-
 .services-container {
   background-color: #F6ECDF;
   padding: 20px;
