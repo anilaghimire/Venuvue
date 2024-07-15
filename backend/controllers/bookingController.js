@@ -16,6 +16,7 @@ exports.createBooking = async (req, res) => {
         }
 
         const newBooking = new Booking({
+           
             userId,
             eventType,
             peopleNumber,

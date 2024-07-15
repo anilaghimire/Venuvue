@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getAllProductsApi } from '../apis/api'
+import { getAllProductsApi } from '../apis/api';
 import { Link } from 'react-router-dom';
 import '../style/Homepage.css';
 
@@ -7,10 +7,9 @@ import homepageImage from '../images/home_bg.jpg';
 import serviceImage1 from '../images/wedding.jpeg';
 import serviceImage2 from '../images/seminar.jpeg';
 import serviceImage3 from '../images/birthday.jpeg';
-import aboutImage from '../images/about.jpg'; 
+import aboutImage from '../images/about.jpg';
 import Footer from '../components/footer';
 import FAQPage from './FAQ';
-
 
 const HomePage = () => {
   const [products, setProducts] = useState([]);
@@ -33,7 +32,7 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="container">
+      <div className="full-width-container">
         <h1 className="heading">Services we provide</h1>
         <div className="services-section">
           <div className="row">
@@ -107,14 +106,13 @@ const HomePage = () => {
                 enjoyable. Browse through our wide range of services and find the
                 perfect fit for your next event.
               </p>
-              
             </div>
           </div>
         </div>
-        </div>
-        <FAQPage />
-        <br></br>
-      <Footer/>
+      </div>
+      <FAQPage />
+      <br />
+      <Footer />
     </div>
   );
 };

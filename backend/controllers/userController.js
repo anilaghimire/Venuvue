@@ -32,7 +32,9 @@ const sendVerifyMail = async (firstName, email, user_id) => {
         }
       });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
+      console.error("Error sending verification mail:", error);
+      throw new Error("Email sending failed");
     }
   };
 

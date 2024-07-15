@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { createProductApi, deleteProductApi, getAllProductsApi } from '../apis/api';
-import { Toastify } from 'toastify';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import Sidebar from '../components/Sidebar';
+import '../style/Admindashbord.css';
 
 const Admindashboard = () => {
   const [productName, setProductName] = useState('');
@@ -24,6 +25,7 @@ const Admindashboard = () => {
     setProductImage(files);
     setPreviewImage(URL.createObjectURL(files));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,6 +42,14 @@ const Admindashboard = () => {
           toast.error(res.data.message);
         } else {
           toast.success(res.data.message);
+          setProducts([...products, res.data.product]);
+          // Clear form fields after successful submission
+          setProductName('');
+          setProductPrice('');
+          setProductCategory('Flower');
+          setProductDescription('');
+          setProductImage(null);
+          setPreviewImage(null);
         }
       })
       .catch((err) => {
@@ -56,7 +66,7 @@ const Admindashboard = () => {
       deleteProductApi(id).then((res) => {
         if (res.data.success === true) {
           toast.success(res.data.message);
-          window.location.reload();
+          setProducts(products.filter(product => product._id !== id));
         } else {
           toast.error(res.data.message);
         }
@@ -65,150 +75,115 @@ const Admindashboard = () => {
   };
 
   return (
-    <div style={{paddingTop:"100px"}}>
-      <div className="d-flex justify-content-between m-3 align-items-center">
-        <h1>Welcome to Admin Dashboard!</h1>
-
-        <button
-          type="button"
-          className="btn btn-success"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-        >
-          Add Product +
-        </button>
-
-        <div
-          className="modal fade"
-          id="exampleModal"
-          tabIndex="-1"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-
-<div className="modal-dialog">
+    <div className="admin-dashboard">
+      <Sidebar />
+      <div className="content" style={{ paddingTop: '95px' }}>
+        <div className="header">
+        <h1 className="mb-4" style={{ fontSize: '2rem' }}>Welcome to Admin Dashboard!</h1>
+          <button
+            type="button"
+            className="btn btn-success btn-sm mb-4"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+          >
+            Add Product
+          </button>
+        </div>
+        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h1 className="modal-title fs-5" id="exampleModalLabel">
-                  Create new product
-                </h1>
-                <button
-                  type="button"
-                  className="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
+                <h5 className="modal-title" id="exampleModalLabel">Create new product</h5>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div className="modal-body">
                 <form>
-                  <label>Product Name</label>
-                  <input
-                    onChange={(e) => setProductName(e.target.value)}
-                    type="text"
-                    className="form-control mb-2"
-                    placeholder="Enter product name"
-                  />
-
-<label>Product Price</label>
-                  <input
-                    onChange={(e) => setProductPrice(e.target.value)}
-                    type="number"
-                    className="form-control mb-2"
-                    placeholder="Enter product price"
-                  />
-
-                  <label>Product Category</label>
-                  <select
-                    onChange={(e) => setProductCategory(e.target.value)}
-                    className="form-control"
-                  >
-                    <option value="Wedding and reception">Wedding and reception</option>
-                    <option value="Seminars and conference">Seminars and conference</option>
-                    <option value="birthdays abd celebration">birthdays abd celebration</option>
-                    
-                  </select>
-
-                  <label>Product Description</label>
-                  <textarea
-                    onChange={(e) => setProductDescription(e.target.value)}
-                    className="form-control"
-                    rows="3"
-                    placeholder="Enter location and  description"
-                  ></textarea>
-
-                  <label>Product Image</label>
-                  <input
-                    onChange={handleImageUpload}
-                    type="file"
-                    className="form-control mb-2"
-                    placeholder="Enter product image"
-                  />
-
-                  {previewImage && (
-                    <img
-                      src={previewImage}
-                      className="img-fluid rounded object fit-cover"
-                      alt="product image"
+                  <div className="mb-3">
+                    <label className="form-label">Product Name</label>
+                    <input
+                      onChange={(e) => setProductName(e.target.value)}
+                      type="text"
+                      className="form-control"
+                      placeholder="Enter product name"
+                      value={productName}
                     />
-                  )}
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Product Price</label>
+                    <input
+                      onChange={(e) => setProductPrice(e.target.value)}
+                      type="number"
+                      className="form-control"
+                      placeholder="Enter product price"
+                      value={productPrice}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Product Category</label>
+                    <select onChange={(e) => setProductCategory(e.target.value)} className="form-control">
+                      <option value="Wedding and reception">Wedding and reception</option>
+                      <option value="Seminars and conference">Seminars and conference</option>
+                      <option value="birthdays and celebration">Birthdays and celebration</option>
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Product Description</label>
+                    <textarea
+                      onChange={(e) => setProductDescription(e.target.value)}
+                      className="form-control"
+                      rows="3"
+                      placeholder="Enter location and description"
+                      value={productDescription}
+                    ></textarea>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Product Image</label>
+                    <input onChange={handleImageUpload} type="file" className="form-control" />
+                    {previewImage && (
+                      <img src={previewImage} className="img-fluid rounded mt-2" style={{ maxWidth: '100%', height: 'auto' }} alt="product preview" />
+                    )}
+                  </div>
                 </form>
               </div>
               <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button
-                  onClick={handleSubmit}
-                  type="button"
-                  className="btn btn-primary"
-                >
-                  Save changes
-                </button>
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button onClick={handleSubmit} type="button" className="btn btn-primary">Save changes</button>
               </div>
             </div>
           </div>
         </div>
+        <div className="table-responsive mt-4">
+          <table className="table table-striped">
+            <thead className="table-dark">
+              <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Product Price</th>
+                <th>Product Category</th>
+                <th>Product Description</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((item) => (
+                <tr key={item._id}>
+                  <td><img src={item.productImageUrl} width={'130'} height={'80'} alt="" /></td>
+                  <td>{item.productName}</td>
+                  <td>Rs.{item.productPrice}</td>
+                  <td>{item.productCategory}</td>
+                  <td>{item.productDescription.slice(0, 20)}</td>
+                  <td>
+                    <div className="btn-group" role="group">
+                      <Link to={`/admin/edit/${item._id}`} className="btn btn-primary btn-sm">Edit</Link>
+                      <button onClick={() => handleDelete(item._id)} className="btn btn-danger btn-sm">Delete</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-
-      <table className="table m-2">
-        <thead className="table-dark">
-          <tr>
-            <th>Product Images</th>
-            <th>Product Name</th>
-            <th>Product Price</th>
-            <th>Product Category</th>
-            <th>Product Description</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products.map((item) => (
-            <tr key={item._id}>
-              <td>
-                <img src={item.productImageUrl} width={'130'} height={'80'} alt="" />
-              </td>
-              <td>{item.productName}</td>
-              <td>Rs.{item.productPrice}</td>
-              <td>{item.productCategory}</td>
-              <td>{item.productDescription.slice(0, 20)}</td>
-              <td>
-                <div className="btn-group" role="group">
-                  <Link to={`/admin/edit/${item._id}`} className="btn btn-primary">
-                    Edit
-                  </Link>
-                  <button onClick={() => handleDelete(item._id)} className="btn btn-danger">
-                    Delete
-                  </button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
     </div>
   );
 };

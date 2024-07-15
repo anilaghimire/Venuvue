@@ -6,11 +6,17 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import Registerpage from './pages/Registerpage';
 import Navbar from './components/Navbar';
+
 import ProductDetail from './pages/ProductDetail';
+
+
+
 
 import LoginPage from './pages/loginpage';
 import Admindashboard from './pages/AdminDashboard';
 import AdminEditProduct from './pages/admin/AdminEditProduct';
+import AdminBookings from './pages/admin/AdminBooking.jsx';
+import CartItems from './pages/admin/CartItem.jsx';
 import AdminRoutes from './protected/AdminRoutes';
 import UserRoutes from './protected/UserRoutes';
 import FeaturePage from './pages/admin/Featurepage';
@@ -20,6 +26,7 @@ import Booking from './pages/Booking';
 import MyBookings from './pages/MyBookings.jsx';
 import ListingPage from './pages/ListingPage';
 import FAQPage from './pages/FAQ.jsx';
+
 
 
 // for showing toast messages
@@ -56,6 +63,9 @@ function App() {
         
         <Route path = '/admindashboard' element = {<Admindashboard> </Admindashboard>}/>
         <Route element={<AdminRoutes/>}>
+
+        <Route path="/admin/cart" element={<CartItems />} />
+        <Route path="/admin/bookings" element={<AdminBookings />} />
 
         <Route element= {<UserRoutes/>}>
           <Route path='/feature' element = {<FeaturePage/>}/>

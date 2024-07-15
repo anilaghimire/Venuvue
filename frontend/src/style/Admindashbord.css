@@ -1,0 +1,63 @@
+.admin-dashboard {
+  display: flex;
+}
+
+.content {
+  margin-left: 250px; /* Width of the sidebar */
+  padding: 20px;
+  width: calc(100% - 250px);
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0; /* Adjust padding for top and bottom */
+}
+
+.header h1 {
+  font-size: 2rem; /* Increase the font size for better visibility */
+  color: #343a40;
+  margin-bottom: 0; /* Ensure no unnecessary margin */
+}
+
+.header .btn {
+  font-size: 1rem; /* Adjust button font size */
+  padding: 8px 16px; /* Adjust button padding */
+}
+
+.table-responsive {
+  margin-top: 20px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
+.table img {
+  border-radius: 5px;
+}
+
+.modal-header .btn-close {
+  padding: 1rem;
+}
+
+.modal-title {
+  font-size: 1.25rem;
+}
+
+.modal-footer .btn {
+  font-size: 0.875rem;
+  padding: 5px 10px;
+}
+
+.form-label {
+  font-weight: bold;
+}

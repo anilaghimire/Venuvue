@@ -14,7 +14,7 @@ const config = () => ({
   },
 });
 
-console.log(config)
+//console.log(config)
 
 // Test API request
 export const testApi = () => Api.get("/test");
@@ -81,11 +81,14 @@ export const updateLoggedInUserDetail = (id, userData) => {
 // Booking APIs
 export const createBookingAPI = (data) =>
   Api.post("/api/booking", data, config());
+
 export const getBookingsAPI = () => Api.get("/api/booking", config());
+
 export const getBookingAPI = (userId) => {
     return Api.get(`/api/booking/user/${userId}/bookings`, config());
   };
 export const updateBookingAPI = (id, data) =>
   Api.put(`/api/booking/${id}`, data, config());
+
 export const deleteBookingAPI = (id) =>
   Api.delete(`/api/booking/${id}`, config());

@@ -4,17 +4,16 @@ import '../style/profile.css';
 import dummyPhoto from '../images/image.png';
 import { updateUser } from '../apis/api';
 import { toast } from 'react-toastify';
- 
+
 const Profile = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
-  const [
-    formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
     avatar: user.avatar,
   });
- 
+
   const handleSubmit = async () => {
     try {
       const response = await updateUser(user._id, formData);
@@ -27,14 +26,14 @@ const Profile = () => {
       toast.error('Error updating profile');
     }
   };
- 
+
   const handleInputChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
- 
+
   const handlePhotoChange = async (e) => {
     try {
       const file = e.target.files[0];
@@ -51,13 +50,13 @@ const Profile = () => {
       toast.error('Error updating profile');
     }
   };
- 
+
   useEffect(() => {
     setUser(JSON.parse(localStorage.getItem('user')));
   }, []);
- 
+
   return (
-    <div className="container">
+    <div className="container profile-container">
       <h1>Profile</h1>
       <form>
         <div className="form-group">
@@ -78,45 +77,43 @@ const Profile = () => {
           </label>
         </div>
         <div className="form-row">
-      <div className="form-group">
-        <label htmlFor="firstName">First Name:</label>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          value={formData.firstName}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div className="form-group">
-        <label htmlFor="lastName">Last Name:</label>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleInputChange}
-        />
-      </div>
-    </div>
-    <div className="form-row">
-      <div className="form-group">
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          disabled
-        />
-      </div>
-    </div>
+          <div className="form-group">
+            <label htmlFor="firstName">First Name:</label>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="lastName">Last Name:</label>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleInputChange}
+            />
+          </div>
+        </div>
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              disabled
+            />
+          </div>
+        </div>
         <button type="button" onClick={handleSubmit}>Save Changes</button>
       </form>
     </div>
   );
 };
- 
+
 export default Profile;
- 
- 

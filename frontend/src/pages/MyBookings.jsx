@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
-import '../style/MyBookings.css';  
-import Navbar from '../components/Navbar'; 
-import image from '../images/saved.png'; 
+import { useNavigate } from "react-router-dom";
+import '../style/MyBookings.css';
+import Navbar from '../components/Navbar';
+import staticImage from '../images/myboooking.png'; // Your static image
 import { getBookingAPI } from '../apis/api';
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true); // State to manage loading state
-  const navigate = useNavigate(); // Use navigate to redirect if user is not found
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBookings = async () => {
@@ -16,39 +16,35 @@ const MyBookings = () => {
         const userDataFromStorage = localStorage.getItem("user");
         if (userDataFromStorage) {
           const { _id: userId } = JSON.parse(userDataFromStorage);
-
-          // Call getBookingAPI with userId
           const response = await getBookingAPI(userId);
           console.log('API Response:', response.data);  
           setBookings(response.data);
         } else {
-          navigate("/login"); // Redirect to login if user data is not found in local storage
+          navigate("/login");
         }
       } catch (error) {
         console.error('Error fetching bookings', error);
       } finally {
-        setLoading(false); // Set loading state to false once data is fetched or error occurs
+        setLoading(false);
       }
     };
 
     fetchBookings();
-  }, [navigate]); // Include navigate in dependency array
+  }, [navigate]);
 
   return (
-    <div className="container-fluid my-bookings-page">
+    <div className="my-bookings-page">
+      <Navbar />
       <div className="static-header">
-        <div className="navbar">
-          <Navbar />
-        </div>
-        <div className="container-fluid" style={{ backgroundColor: "#ffffff", paddingTop: "50px", paddingBottom: "50px" }}>
-          {/* Static Image Section */}
-          <div className="w-100 mb-4" style={{ height: "50vh", overflow: "hidden" }}>
-            <img src={image} alt="Static" className="img-fluid w-100" style={{ objectFit: "cover", height: "100%" }} />
+        <div className="hero-section">
+          <div className="hero-image-container">
+            <img src={staticImage} alt="Static" className="img-fluid hero-image" />
           </div>
         </div>
       </div>
 
-      <div className="container">
+      <div className="booking-list">
+        <h2 className="booking-list-title">My Bookings</h2>
         <div className="table-responsive">
           {loading ? (
             <p>Loading...</p>
@@ -60,7 +56,6 @@ const MyBookings = () => {
                   <th>Event Type</th>
                   <th>Number of People</th>
                   <th>Event Date</th>
-                 
                 </tr>
               </thead>
               <tbody>
@@ -69,21 +64,20 @@ const MyBookings = () => {
                     <tr key={index}>
                       <td>
                         <img
-                          src={booking.image}
-                          alt={booking.banquet}
+                          src={staticImage} // Use static image
+                          alt="Banquet"
                           className="img-fluid booking-image"
                         />
-                        {booking.banquet}
+                        Static Banquet Name {/* Static name */}
                       </td>
                       <td>{booking.eventType}</td>
                       <td>{booking.peopleNumber}</td>
                       <td>{booking.date}</td>
-                      
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="5">No bookings available</td>
+                    <td colSpan="4">No bookings available</td>
                   </tr>
                 )}
               </tbody>

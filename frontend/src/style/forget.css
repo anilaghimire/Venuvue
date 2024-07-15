@@ -7,15 +7,15 @@
  
 /* Body styles */
 .background-img2 {
-    background-color: #5885d8;
+    background-color: #E9D8C3;
     background-image:
-        radial-gradient(at 61% 4%, rgb(117, 170, 239) 0px, transparent 50%),
-        radial-gradient(at 75% 66%, hsla(196, 91%, 79%, 1) 0px, transparent 50%),
-        radial-gradient(at 98% 88%, rgb(110, 169, 216) 0px, transparent 50%),
-        radial-gradient(at 23% 16%, rgb(137, 138, 164) 0px, transparent 50%),
-        radial-gradient(at 95% 65%, rgb(146, 241, 159) 0px, transparent 50%),
-        radial-gradient(at 10% 79%, hsla(228, 96%, 69%, 1) 0px, transparent 50%),
-        radial-gradient(at 85% 58%, rgb(152, 216, 127) 0px, transparent 50%);
+        radial-gradient(at 61% 4%, rgb(239, 164, 117) 0px, transparent 50%),
+        radial-gradient(at 75% 66%, rgb(250, 179, 153) 0px, transparent 50%),
+        radial-gradient(at 98% 88%, rgb(149, 101, 45) 0px, transparent 50%),
+        radial-gradient(at 23% 16%, rgb(202, 168, 136) 0px, transparent 50%),
+        radial-gradient(at 95% 65%, rgb(241, 209, 146) 0px, transparent 50%),
+        radial-gradient(at 10% 79%, rgb(252, 201, 100) 0px, transparent 50%),
+        radial-gradient(at 85% 58%, rgb(232, 167, 154) 0px, transparent 50%);
     background-repeat: no-repeat;
     color: white;
     display: flex;
@@ -27,9 +27,9 @@
 .cardf {
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(19, 16, 14, 0.75);
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.125);
+    border: 1px solid rgba(255, 255, 255, 0);
     display: flex;
     flex-direction: column;
     align-items: center;
