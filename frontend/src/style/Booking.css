@@ -57,6 +57,12 @@
   .date-range input {
     width: 48%;
   }
+
+  .error {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+  }
   
   .submit-button {
     padding: 10px 20px;

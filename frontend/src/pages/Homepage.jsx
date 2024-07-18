@@ -120,11 +120,11 @@ const HomePage = () => {
           ))}
         </div>
 
-        <div className="view-more-container">
+        {/* <div className="view-more-container">
           <button className="btn btn-secondary" onClick={navigateToListingPage}>
             View More
           </button>
-        </div>
+        </div> */}
 
         {/* About Section */}
         <div className="about-section">
