@@ -6,7 +6,9 @@ import image4 from "../images/img3.jpeg";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/footer"; // Ensure the path and casing are correct
-import '../style/listingPage.css'; // Corrected the import statement
+import '../style/ListingPage.css';
+
+
 
 const ListingPage = () => {
   const banquets = [

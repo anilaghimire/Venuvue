@@ -32,6 +32,19 @@ const userSchema = mongoose.Schema({
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
+    passwordChangedAt: Date, // New field to track password change date
+    passwordHistory: [{
+        type: String
+    }],
+    
+    failedLoginAttempts: {
+        type: Number,
+        default: 0
+    },
+    lockUntil: {
+        type: Date,
+        default: null
+    }
 })
 
 userSchema.methods.getResetPasswordToken = function () {

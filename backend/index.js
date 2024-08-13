@@ -9,7 +9,11 @@ const cloudinary = require('cloudinary');
 const userRoutes = require('./route/userRoutes'); 
 const productRoutes = require('./route/productRoutes'); 
 const cartRoutes = require('./route/cartRoutes'); 
-const bookingRoutes = require('./route/bookingRoutes')
+const bookingRoutes = require('./route/bookingRoutes');
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
+const expressMongoSanitize = require('express-mongo-sanitize');
+const expressNoSQLSanitizer = require('express-nosql-sanitizer');
 
 // Initialize Express app
 const app = express();
@@ -30,6 +34,13 @@ const corsPolicy = {
     optionSuccessStatus: 200
 };
 app.use(cors(corsPolicy));
+
+// Security Headers
+app.use(helmet());
+
+// Sanitize incoming requests
+app.use(expressMongoSanitize());
+app.use(expressNoSQLSanitizer());
 
 // Multiparty middleware setup
 app.use(multiparty());

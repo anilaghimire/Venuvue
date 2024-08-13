@@ -41,7 +41,21 @@ const ProductDetailPage = () => {
     );
   }
 
+  const isLoggedIn = () => {
+    return !!localStorage.getItem('token'); // Check if token exists in localStorage
+  };
+
+  const handleUnauthenticated = () => {
+    toast.warn('Please log in first');
+    navigate('/login'); // Redirect to login page if not logged in
+  };
+
   const addToCart = async (productDetails) => {
+    if (!isLoggedIn()) {
+      handleUnauthenticated();
+      return;
+    }
+
     try {
       await axios.post('http://localhost:5000/api/cart/addtocart', {
         productId: productDetails._id,
@@ -52,18 +66,22 @@ const ProductDetailPage = () => {
         }
       });
       toast.success('Item added to favourite');
-     // navigate('/cart');
+      // navigate('/cart');
     } catch (error) {
       toast.error('Failed adding to favourite');
     }
   };
 
   const proceedBooking = () => {
+    if (!isLoggedIn()) {
+      handleUnauthenticated();
+      return;
+    }
     navigate('/booking');
   };
 
   return (
-    <div style={{paddingTop:"100px"}}>
+    <div style={{ paddingTop: "100px" }}>
       <div className="product-detail-page">
         <div className="product-detail-container">
           <h1 className="page-title">Product Details</h1>
@@ -75,7 +93,7 @@ const ProductDetailPage = () => {
               <h1 className="product-title">{productDetails.productName}</h1>
               <p className="product-price">Rs.{productDetails.productPrice}</p>
               <p className="product-description">{productDetails.productDescription}</p>
-              
+
               <div className="pricing-box">
                 <h2>Pricing</h2>
                 <p>Up to 100 guests - 2800 per plate</p>
@@ -114,7 +132,7 @@ const ProductDetailPage = () => {
             ></iframe>
           </div>
         </div>
-        
+
         <Footer />
       </div>
     </div>

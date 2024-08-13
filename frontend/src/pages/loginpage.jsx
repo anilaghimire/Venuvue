@@ -5,6 +5,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import '../style/Login.css';
 import logo from '../images/logo.png';
 
+
+
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,38 +20,50 @@ const LoginPage = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    if (!email || !password) {
-      toast.error('Please enter both email and password.');
-      return;
-    }
+  if (!email || !password) {
+    toast.error('Please enter both email and password.');
+    return;
+  }
 
-    const data = {
-      email: email,
-      password: password,
-    };
-
-    loginUserApi(data)
-      .then((res) => {
-        console.log(res);
-        if (res.data.success === false) {
-          toast.error(res.data.message);
-        } else {
-          toast.success(res.data.message);
-          localStorage.setItem('token', res.data.token);
-          const jsonDecode = JSON.stringify(res.data.userData);
-          localStorage.setItem('user', jsonDecode);
-          navigate("/"); // Navigate to dashboard after successful login
-        }
-      })
-      .catch((err) => {
-        toast.error('Server error');
-        console.error(err.message);
-      });
+  const data = {
+    email: email,
+    password: password,
   };
 
+  loginUserApi(data)
+    .then((res) => {
+      console.log(res); // Ensure this logs the correct response
+
+      if (res.data.success === false) {
+        if (res.data.message.includes('locked')) {
+          toast.error(res.data.message);
+        } else if (res.data.message.includes('Incorrect Password')) {
+          toast.error(res.data.message);
+        } else if (res.data.message.includes('password has expired')) {
+          const resetToken = res.data.resetToken; 
+          toast.error('Your password has expiered, set new passord');
+          navigate(`/password/reset/${resetToken}`); // Redirect to password reset page
+        } else {
+          toast.error(res.data.message);
+        }
+      } else {
+        toast.success(res.data.message);
+        localStorage.setItem('token', res.data.token);
+        const jsonDecode = JSON.stringify(res.data.userData);
+        localStorage.setItem('user', jsonDecode);
+        navigate("/"); // Navigate to dashboard after successful login
+      }
+    })
+    .catch((err) => {
+      toast.error('Your password has expiered, set new passord');
+      console.error(err.message);
+    });
+};
+    
+    
   return (
     <div className="page-container">
       <div className="background-image"></div>
