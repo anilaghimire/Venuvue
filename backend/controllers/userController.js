@@ -6,10 +6,34 @@ const { sendEmail } = require("../middleware/sendMail");
 const crypto = require('crypto');
 const { check, validationResult } = require('express-validator');
 const xss = require("xss");
+// const { encryptEmail, decryptEmail } = require('./crypto-utils');
 
 const PASSWORD_EXPIRY_TIME = 5 * 60 * 1000; // 1 minute for testing purposes
 const MAX_FAILED_ATTEMPTS = 3;
 const LOCK_TIME = 5 * 60 * 1000; // 5 minutes
+
+//  email Encryption and Decryption Functions
+const algorithm = 'aes-256-cbc';
+//const secretKey = process.env.SECRET_KEY || 'mySecretKey1234567890123456';
+const secretKey = crypto.createHash('sha256').update(process.env.SECRET_KEY || 'mySecretKey1234567890123456').digest();
+const iv = crypto.randomBytes(16);
+
+const encryptEmail = (email) => {
+    const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey), iv);
+    let encrypted = cipher.update(email);
+    encrypted = Buffer.concat([encrypted, cipher.final()]);
+    return iv.toString('hex') + ':' + encrypted.toString('hex');
+};
+
+const decryptEmail = (encryptedEmail) => {
+    const parts = encryptedEmail.split(':');
+    const iv = Buffer.from(parts.shift(), 'hex');
+    const encryptedText = Buffer.from(parts.join(':'), 'hex');
+    const decipher = crypto.createDecipheriv(algorithm, Buffer.from(secretKey), iv);
+    let decrypted = decipher.update(encryptedText);
+    decrypted = Buffer.concat([decrypted, decipher.final()]);
+    return decrypted.toString();
+};
 
 const isPasswordInHistory = async (user, newPassword) => {
   // Ensure passwordHistory is initialized as an array
@@ -115,7 +139,7 @@ const createUser = [
             const newUser = new Users({
                 firstName: firstName,
                 lastName: lastName,
-                email: email,
+                email: encryptEmail(email),
                 password: encryptedPassword,
                 passwordChangedAt: Date.now(), // Set password change time to now
                 passwordHistory: [encryptedPassword] // Initialize password history with the current password
@@ -179,7 +203,7 @@ const loginUser = async (req, res) => {
     // Step 4: Try-catch block
     try {
         // Step 5: Find user
-        const user = await Users.findOne({ email: email });
+        const user = await Users.findOne({ email: encryptEmail(email) });
         if (!user) {
             return res.json({
                 success: false,
@@ -371,7 +395,7 @@ const forgotPassword = async (req, res) => {
 
             res.status(200).json({
                 success: true,
-                message: `Email sent to ${user.email}`,
+                message: `Email sent to ${decryptEmail(user.email)}`,
             });
         } catch (error) {
             // Error sending email
