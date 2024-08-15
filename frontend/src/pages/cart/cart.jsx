@@ -22,7 +22,7 @@ const Cart = () => {
 
   const getCartItems = useCallback(async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/cart", {
+      const response = await axios.get("https://localhost:5000/api/cart", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

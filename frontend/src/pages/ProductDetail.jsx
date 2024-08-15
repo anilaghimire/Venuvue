@@ -57,7 +57,7 @@ const ProductDetailPage = () => {
     }
 
     try {
-      await axios.post('http://localhost:5000/api/cart/addtocart', {
+      await axios.post('https://localhost:5000/api/cart/addtocart', {
         productId: productDetails._id,
         quantity: 1
       }, {
