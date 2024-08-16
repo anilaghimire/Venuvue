@@ -1,7 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaCartPlus, FaListAlt, FaEdit } from 'react-icons/fa';
-import '../style/Sidebar.css'; // Optional: if you have specific styles for the sidebar
+import { FaCartPlus, FaListAlt, FaEdit, FaClipboardList } from 'react-icons/fa'; // Import the necessary icons
+import '../style/Sidebar.css'; 
+
+
 
 const Sidebar = () => {
   return (
@@ -20,6 +22,11 @@ const Sidebar = () => {
         <li>
           <Link to="/admin/edit/:id">
             <FaEdit /> Edit Product
+          </Link>
+        </li>
+        <li>
+          <Link to='/admin/audittrail'>
+            <FaClipboardList /> Audit Trail
           </Link>
         </li>
       </ul>

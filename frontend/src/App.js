@@ -26,6 +26,7 @@ import Booking from './pages/Booking';
 import MyBookings from './pages/MyBookings.jsx';
 import ListingPage from './pages/ListingPage';
 import FAQPage from './pages/FAQ.jsx';
+import AuditTrail from './pages/admin/AuditTrail.jsx';
 
 
 
@@ -54,7 +55,7 @@ function App() {
         <Route path = '/faq' element={<FAQPage/>}/>
         <Route path = '/forgot-password' element={<ForgetPassword/>}/>
         <Route path="/password/reset/:token" element={<ResetPassword />} />
-        
+       
         
        
         
@@ -68,6 +69,7 @@ function App() {
 
         <Route path="/admin/cart" element={<CartItems />} />
         <Route path="/admin/bookings" element={<AdminBookings />} />
+        <Route path = '/admin/audittrail' element={<AuditTrail/>}/>
 
         <Route element= {<UserRoutes/>}>
           <Route path='/feature' element = {<FeaturePage/>}/>

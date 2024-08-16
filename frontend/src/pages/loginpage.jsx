@@ -54,7 +54,14 @@ const handleSubmit = (e) => {
         localStorage.setItem('token', res.data.token);
         const jsonDecode = JSON.stringify(res.data.userData);
         localStorage.setItem('user', jsonDecode);
+        
+
+       // Check if user is an admin
+        if (res.data.userData.role === 'admin') {
+          navigate('/admindashboard'); // Navigate to admin dashboard
+        } else {
         navigate("/"); // Navigate to dashboard after successful login
+        }
       }
     })
     .catch((err) => {

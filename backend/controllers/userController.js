@@ -8,7 +8,7 @@ const { check, validationResult } = require('express-validator');
 const xss = require("xss");
 // const { encryptEmail, decryptEmail } = require('./crypto-utils');
 
-const PASSWORD_EXPIRY_TIME = 5 * 60 * 1000; // 1 minute for testing purposes
+const PASSWORD_EXPIRY_TIME = 90 * 60 * 60* 1000; // 1 minute for testing purposes
 const MAX_FAILED_ATTEMPTS = 3;
 const LOCK_TIME = 5 * 60 * 1000; // 5 minutes
 
