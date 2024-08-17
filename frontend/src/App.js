@@ -69,7 +69,7 @@ function App() {
 
         <Route path="/admin/cart" element={<CartItems />} />
         <Route path="/admin/bookings" element={<AdminBookings />} />
-        <Route path = '/admin/audittrail' element={<AuditTrail/>}/>
+        <Route path = 'admin/audittrail' element={<AuditTrail/>}/>
 
         <Route element= {<UserRoutes/>}>
           <Route path='/feature' element = {<FeaturePage/>}/>

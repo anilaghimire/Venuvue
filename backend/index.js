@@ -10,6 +10,7 @@ const userRoutes = require("./route/userRoutes");
 const productRoutes = require("./route/productRoutes");
 const cartRoutes = require("./route/cartRoutes");
 const bookingRoutes = require("./route/bookingRoutes");
+const loggerRoutes = require ("./route/loggerRoutes");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const expressMongoSanitize = require("express-mongo-sanitize");
@@ -81,6 +82,9 @@ app.use("/api/cart", cartRoutes);
 
 // Booking routes
 app.use("/api/booking", bookingRoutes);
+
+
+app.use('/api/audit-trails',loggerRoutes);
 
 const options = {
   key: fs.readFileSync("key.pem"),

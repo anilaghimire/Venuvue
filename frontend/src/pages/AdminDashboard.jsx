@@ -8,7 +8,7 @@ import '../style/Admindashbord.css';
 const Admindashboard = () => {
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
-  const [productCategory, setProductCategory] = useState('Flower');
+  const [productCategory, setProductCategory] = useState('Hall');
   const [productDescription, setProductDescription] = useState('');
   const [productImage, setProductImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -46,7 +46,7 @@ const Admindashboard = () => {
           // Clear form fields after successful submission
           setProductName('');
           setProductPrice('');
-          setProductCategory('Flower');
+          setProductCategory('hall');
           setProductDescription('');
           setProductImage(null);
           setPreviewImage(null);

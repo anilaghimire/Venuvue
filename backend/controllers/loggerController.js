@@ -1,47 +1,26 @@
-const Log = require('../model/logs');
- 
-// Get all logs
-const getAllLogs = async (req, res) => {
+// controllers/auditTrailController.js
+const AuditTrail = require('../model/loggerModel');
+
+// Get all audit trails
+exports.getAuditTrails = async (req, res) => {
     try {
-        const logs = await Log.find().sort({ timestamp: -1 });
-        res.status(200).json(logs);
+        const auditTrails = await AuditTrail.find().sort({ timestamp: -1 }); // Sort by most recent
+        res.status(200).json({ success: true, data: auditTrails });
     } catch (error) {
-        res.status(500).json({ message: 'Failed to retrieve logs', error: error.message });
+        res.status(500).json({ success: false, message: 'Server Error', error: error.message });
     }
 };
- 
-// Get a specific log by ID
-const getLogById = async (req, res) => {
-    const { id } = req.params;
+
+// Get audit trails by user ID
+exports.getAuditTrailsByUser = async (req, res) => {
     try {
-        const log = await Log.findById(id);
-        if (!log) {
-            return res.status(404).json({ message: 'Log not found' });
+        const userId = req.params.userId;
+        const auditTrails = await AuditTrail.find({ userId }).sort({ timestamp: -1 });
+        if (!auditTrails || auditTrails.length === 0) {
+            return res.status(404).json({ success: false, message: 'No audit trails found for this user.' });
         }
-        res.status(200).json(log);
+        res.status(200).json({ success: true, data: auditTrails });
     } catch (error) {
-        res.status(500).json({ message: 'Failed to retrieve log', error: error.message });
+        res.status(500).json({ success: false, message: 'Server Error', error: error.message });
     }
-};
- 
-// Delete a specific log by ID
-const deleteLogById = async (req, res) => {
-    const { id } = req.params;
-    try {
-        const log = await Log.findByIdAndDelete(id);
-        if (!log) {
-            return res.status(404).json({ message: 'Log not found' });
-        }
-        res.status(200).json({ message: 'Log deleted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Failed to delete log', error: error.message });
-    }
-};
- 
- 
-module.exports = {
-    getAllLogs,
-    getLogById,
-    deleteLogById,
-   
 };

@@ -8,7 +8,10 @@ const { check, validationResult } = require('express-validator');
 const xss = require("xss");
 // const { encryptEmail, decryptEmail } = require('./crypto-utils');
 
-const PASSWORD_EXPIRY_TIME = 90 * 60 * 60* 1000; // 1 minute for testing purposes
+
+const PASSWORD_EXPIRY_TIME = 90 * 60 * 60* 1000; // 90 days 
+
+
 const MAX_FAILED_ATTEMPTS = 3;
 const LOCK_TIME = 5 * 60 * 1000; // 5 minutes
 
@@ -19,6 +22,7 @@ const secretKey = crypto.createHash('sha256').update(process.env.SECRET_KEY || '
 const iv = crypto.randomBytes(16);
 
 const encryptEmail = (email) => {
+    
     const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey), iv);
     let encrypted = cipher.update(email);
     encrypted = Buffer.concat([encrypted, cipher.final()]);
@@ -27,7 +31,7 @@ const encryptEmail = (email) => {
 
 const decryptEmail = (encryptedEmail) => {
     const parts = encryptedEmail.split(':');
-    const iv = Buffer.from(parts.shift(), 'hex');
+    
     const encryptedText = Buffer.from(parts.join(':'), 'hex');
     const decipher = crypto.createDecipheriv(algorithm, Buffer.from(secretKey), iv);
     let decrypted = decipher.update(encryptedText);
@@ -382,7 +386,7 @@ const forgotPassword = async (req, res) => {
         await user.save();
 
         // Step 6: Send reset password email
-        const frontendBaseUrl = process.env.FRONTEND_BASE_URL || "http://localhost:3000";
+        const frontendBaseUrl = process.env.FRONTEND_BASE_URL || "https://localhost:3000";
         const resetUrl = `${frontendBaseUrl}/password/reset/${resetPasswordToken}`;
         const message = `Reset Your Password by clicking on the link below: \n\n ${resetUrl}`;
 

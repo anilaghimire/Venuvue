@@ -14,6 +14,14 @@ const config = () => ({
   },
 });
 
+const getAuthHeaders = () => {
+  return {
+    headers: {
+      Authorization : `Bearer ${localStorage.getItem("token")}`,
+    }
+  };
+};
+
 //console.log(config)
 
 // Test API request
@@ -92,3 +100,19 @@ export const updateBookingAPI = (id, data) =>
 
 export const deleteBookingAPI = (id) =>
   Api.delete(`/api/booking/${id}`, config());
+
+
+// // Fetch all logs API
+// export const getAllLogsApi = () => Api.get("/api/audit-trail/logs", config());
+
+// // Fetch a specific log by ID API
+// export const getLogByIdApi = (id) =>
+//   Api.get(`/api/audit-trail/logs/${id}`, config());
+
+// // Delete a specific log by ID API
+// export const deleteLogByIdApi = (id) =>
+//   Api.delete(`/api/audit-trail/logs/${id}`, config());
+
+//audit trail
+export const getAuditTrailsApi = (userId) => Api.get("/api/audit-trails/", getAuthHeaders(userId));
+export const getAuditTrailsByUserApi = (userId) => Api.get(`/api/audit-trails/user/${userId}`, getAuthHeaders());

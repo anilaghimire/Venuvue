@@ -1,14 +1,14 @@
+// routes/auditTrailRoutes.js
 const express = require('express');
+const { getAuditTrails, getAuditTrailsByUser } = require('../controllers/loggerController');
+const { authGuard } = require('../middleware/authGuard'); // Ensure you have authentication middleware
+
 const router = express.Router();
-const logController = require('../controllers/log_controller.js');
- 
-// Route to get all logs
-router.get('/logs', logController.getAllLogs);
- 
-// Route to get a specific log by ID
-router.get('/logs/:id', logController.getLogById);
- 
-// Route to delete a specific log by ID
-router.delete('/logs/:id', logController.deleteLogById);
- 
+
+// Route for getting all audit trails (admin or authorized personnel might use this)
+router.get('/', authGuard, getAuditTrails);
+
+// Route for getting audit trails by a specific user
+router.get('/user/:userId', authGuard, getAuditTrailsByUser);
+
 module.exports = router;
