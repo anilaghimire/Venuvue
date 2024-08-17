@@ -72,6 +72,8 @@ const ResetPassword = () => {
           }
         }
       })
+
+      
       .catch((err) => {
         console.error("Error resetting password:", err);
         // Add a generic error message for password reuse issue

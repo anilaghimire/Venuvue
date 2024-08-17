@@ -13,30 +13,40 @@ const PASSWORD_EXPIRY_TIME = 90 * 60 * 60* 1000; // 90 days
 
 
 const MAX_FAILED_ATTEMPTS = 3;
-const LOCK_TIME = 5 * 60 * 1000; // 5 minutes
+const LOCK_TIME = 1 * 60 * 1000; // 5 minutes
 
 //  email Encryption and Decryption Functions
 const algorithm = 'aes-256-cbc';
 //const secretKey = process.env.SECRET_KEY || 'mySecretKey1234567890123456';
 const secretKey = crypto.createHash('sha256').update(process.env.SECRET_KEY || 'mySecretKey1234567890123456').digest();
-const iv = crypto.randomBytes(16);
-
+// const iv = crypto.randomBytes(16);
+const iv = Buffer.alloc(16);
 const encryptEmail = (email) => {
     
-    const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey), iv);
-    let encrypted = cipher.update(email);
-    encrypted = Buffer.concat([encrypted, cipher.final()]);
-    return iv.toString('hex') + ':' + encrypted.toString('hex');
+    // const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey), iv);
+    // let encrypted = cipher.update(email);
+    // encrypted = Buffer.concat([encrypted, cipher.final()]);
+    // return iv.toString('hex') + ':' + encrypted.toString('hex');
+ const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
+let encrypted = cipher.update(email, 'utf8', 'hex');
+encrypted += cipher.final('hex');
+return encrypted;
 };
 
-const decryptEmail = (encryptedEmail) => {
-    const parts = encryptedEmail.split(':');
+// const decryptEmail = (encryptedEmail) => {
+//     const parts = encryptedEmail.split(':');
     
-    const encryptedText = Buffer.from(parts.join(':'), 'hex');
-    const decipher = crypto.createDecipheriv(algorithm, Buffer.from(secretKey), iv);
-    let decrypted = decipher.update(encryptedText);
-    decrypted = Buffer.concat([decrypted, decipher.final()]);
-    return decrypted.toString();
+//     const encryptedText = Buffer.from(parts.join(':'), 'hex');
+//     const decipher = crypto.createDecipheriv(algorithm, Buffer.from(secretKey), iv);
+//     let decrypted = decipher.update(encryptedText);
+//     decrypted = Buffer.concat([decrypted, decipher.final()]);
+//     return decrypted.toString();
+
+const decryptEmail = (encryptedEmail) => {
+    const decipher = crypto.createDecipheriv(algorithm, secretKey, iv);
+    let decrypted = decipher.update(encryptedEmail, 'hex', 'utf8');
+    decrypted += decipher.final('utf8');
+    return decrypted;
 };
 
 const isPasswordInHistory = async (user, newPassword) => {
@@ -83,7 +93,7 @@ const sendVerifyMail = async (firstName, email, user_id) => {
           from: "amiableella6@gmail.com",
           to: email,
           subject: "For Verification mail",
-          html: `<p>Hi, ${firstName} ,Please click here to <a href= "http://localhost:5000/api/user/verify/${user_id}"> Verify </a> your mail.</p>`,
+          html: `<p>Hi, ${firstName} ,Please click here to <a href= "https://localhost:5000/api/user/verify/${user_id}"> Verify </a> your mail.</p>`,
       };
       transporter.sendMail(mailOptions, function (error, info) {
           if (error) {
